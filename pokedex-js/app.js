@@ -1,0 +1,45 @@
+const pokeContainer = document.getElementById("poke_container")
+
+const pokeNumber = 150;
+
+
+const fetchPokemons = async () => {
+for(let i=1; i<=pokeNumber; i++) {
+    await getPokemon(i);
+}
+}
+
+
+const getPokemon = async(id) => {
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}`
+    const res = await fetch(url);
+    const pokemon = await res.json();
+    createPokemonCard(pokemon)
+    //console.log(pokemon)
+}
+
+
+
+function createPokemonCard(pokemon) {
+  const pokemonEl = document.createElement("div");
+  pokemonEl.classList.add("pokemon")
+
+  //First letter to upperCase:
+
+  const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+
+const pokeInnerHTML = `
+  <div class="img-container">
+  <img src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png"/>
+  </div>
+`;
+
+pokemonEl.innerHTML = pokeInnerHTML;
+
+pokeContainer.appendChild(pokemonEl);
+}
+
+fetchPokemons()
+
+
+
